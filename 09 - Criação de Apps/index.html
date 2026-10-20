@@ -1,0 +1,992 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trilha hands-on de Análise de Clientes & Churn na plataforma Databricks">
+      
+      
+      
+        <link rel="canonical" href="https://cadubettanim.github.io/Databricks-Master-Training/09%20-%20Cria%C3%A7%C3%A3o%20de%20Apps/">
+      
+      
+        <link rel="prev" href="../08%20-%20Reten%C3%A7%C3%A3o%20com%20ML%20e%20GenAI/">
+      
+      
+        <link rel="next" href="../10%20-%20Fechamento%20%28Pr%C3%B3ximos%20Passos%29/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/databricks-symbol.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>09 - Criação de Apps - Databricks Master Training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#09-criacao-de-apps" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Databricks Master Training" class="md-header__button md-logo" aria-label="Databricks Master Training" data-md-component="logo">
+      
+  <img src="../assets/databricks-lockup-white.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Databricks Master Training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              09 - Criação de Apps
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CaduBettanim/Databricks-Master-Training" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Databricks Master Training" class="md-nav__button md-logo" aria-label="Databricks Master Training" data-md-component="logo">
+      
+  <img src="../assets/databricks-lockup-white.svg" alt="logo">
+
+    </a>
+    Databricks Master Training
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CaduBettanim/Databricks-Master-Training" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01%20-%20SQL%20com%20IA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 - SQL com IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02%20-%20Gera%C3%A7%C3%A3o%20de%20Alertas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 - Geração de Alertas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03%20-%20M%C3%A9tricas%20de%20Neg%C3%B3cio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 - Métricas de Negócio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04%20-%20IA%20Generativa%20no%20SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 - IA Generativa no SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05%20-%20Dashboards%20com%20IA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 - Dashboards com IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06%20-%20Previs%C3%A3o%20de%20Churn%20%28ML%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 - Previsão de Churn (ML)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07%20-%20An%C3%A1lise%20de%20Dados%20Multi-Agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 - Análise de Dados Multi-Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08%20-%20Reten%C3%A7%C3%A3o%20com%20ML%20e%20GenAI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 - Retenção com ML e GenAI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 - Criação de Apps
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 - Criação de Apps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#passo-1-publicar-o-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 1: Publicar o app
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-2-abrir-o-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 2: Abrir o app
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-3-ver-a-governanca-do-unity-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 3: Ver a governança do Unity Gateway
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passo 3: Ver a governança do Unity Gateway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-e-a-central-de-retencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que é a Central de Retenção?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explore
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10%20-%20Fechamento%20%28Pr%C3%B3ximos%20Passos%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - Fechamento (Próximos Passos)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#passo-1-publicar-o-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 1: Publicar o app
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-2-abrir-o-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 2: Abrir o app
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passo-3-ver-a-governanca-do-unity-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passo 3: Ver a governança do Unity Gateway
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passo 3: Ver a governança do Unity Gateway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-que-e-a-central-de-retencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        O que é a Central de Retenção?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explore
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="09-criacao-de-apps">09 - Criação de Apps</h1>
+<p><img alt="Trilha do Master Training com destaque no que foi construído até o Exercício 09" src="../assets/09%20-%20arquitetura.gif?v=20260928" /></p>
+<blockquote>
+<p><em>Tudo o que você construiu durante a trilha.</em></p>
+</blockquote>
+<p>Você detectou o risco (dashboards + modelo do Ex. 6), diagnosticou o porquê (agentes do Ex. 7) e criou as funções que agem (Ex. 8). Agora vamos reunir tudo num produto: a <strong>Central de Retenção</strong>, um app que qualquer atendente abre no navegador, sem SQL e sem notebook.</p>
+<p>O app reúne o que você construiu nos módulos anteriores em três abas, e você o publica rodando um único notebook: preenche dois campos e clica em <strong>Run all</strong>. O notebook cria o app, configura automaticamente tudo que ele precisa e devolve a URL.</p>
+<p>E tem uma novidade: a IA do app (a leitura dos gráficos e o e-mail de retenção) passa por um <strong>model service do Unity Gateway</strong>, criado no seu schema. É um modelo governado pelo Unity Catalog, com limite de uso e registro de cada chamada, exatamente como uma empresa colocaria IA em produção.</p>
+<p><strong>Pré-requisitos:</strong>
+- <a href="../01%20-%20SQL%20com%20IA">Ex. 1 - SQL com IA</a>
+- <a href="../06%20-%20Previs%C3%A3o%20de%20Churn%20%28ML%29">Ex. 6 - Previsão de Churn (ML)</a>
+- <a href="../07%20-%20An%C3%A1lise%20de%20Dados%20Multi-Agent">Ex. 7 - Análise de Dados Multi-Agent</a>
+- <a href="../08%20-%20Reten%C3%A7%C3%A3o%20com%20ML%20e%20GenAI">Ex. 8 - Retenção com ML e GenAI</a></p>
+<hr />
+<h2 id="passo-1-publicar-o-app">Passo 1: Publicar o app</h2>
+<ol>
+<li>Importe o notebook: <strong>Workspace → Três pontinhos no topo → Import → URL</strong>, e cole o seguinte:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>https://github.com/CaduBettanim/Databricks-Master-Training/blob/main/09%20-%20Cria%C3%A7%C3%A3o%20de%20Apps/deploy_app.py
+</code></pre></div></li>
+<li>Após clicar em <strong>Import</strong>, você será redirecionado para o notebook</li>
+<li>No dropdown na barra superior, ao lado de <strong>Run all</strong>, selecione o cluster <code>dbacademy_workshop_cluster</code></li>
+<li>Rode a primeira célula de código, abaixo de <strong>Passo 1 — Preencha os campos e rode tudo</strong>, para exibir os widgets</li>
+<li>Preencha os widgets:<ul>
+<li><strong>1. Seu schema</strong>: o schema que você criou no Ex. 1</li>
+<li><strong>2. Endpoint do Supervisor (Ex.07)</strong>: o nome do endpoint que você copiou no Passo 10 do Ex. 7 (ex.: <code>mas-3d713414-endpoint</code>)</li>
+<li><strong>5. Model service (Unity Gateway)</strong>: já vem preenchido com <code>retencao-gateway</code>. Pode deixar como está</li>
+</ul>
+</li>
+<li>Clique em <strong>Run all</strong></li>
+</ol>
+<blockquote>
+<p>Não guardou o endpoint? Em <strong>Agents</strong>, abra o seu Supervisor e clique no botão <strong>Endpoint</strong> em cima</p>
+</blockquote>
+<p>O notebook faz todo o trabalho pesado:
+- Baixa o código do app do GitHub e o prepara com a sua configuração
+- Resolve o SQL Warehouse pelo nome (<code>dbacademy_workshop_wh</code>), com fallback
+- Cria o seu <strong>model service</strong> <code>dbacademy.&lt;seu_schema&gt;.retencao-gateway</code> no Unity Gateway (modelo <code>gpt-oss-20b</code>, limite de 60 chamadas por minuto e tabela de inferência)
+- Cria o app (<code>central-retencao-&lt;seu_schema&gt;</code>) com compute e <em>service principal</em> próprios
+- Habilita o <strong>on-behalf-of</strong> (escopos <code>sql</code>, <code>model-serving</code> e <code>ai-gateway</code>) e declara o warehouse que o app usa
+- Publica e imprime a URL</p>
+<blockquote>
+<p>O notebook é <strong>autocontido</strong>: baixa sozinho o código do app (a pasta <code>app/</code>, com o front-end já compilado) do GitHub em tempo de execução. Você não precisa clonar o repositório.</p>
+</blockquote>
+<p>Repare no que ele não faz: nenhuma concessão de permissão. Sem <code>GRANT</code>, sem <code>EXECUTE</code>, sem <code>CAN_QUERY</code>, sem <code>CAN_RUN</code> em Genie. Sob o on-behalf-of, o app age com a sua identidade, que já tem acesso a tudo.</p>
+<h2 id="passo-2-abrir-o-app">Passo 2: Abrir o app</h2>
+<ol>
+<li>Clique na URL que o notebook imprime no final</li>
+<li>Na primeira vez, o Databricks pede que você <strong>autorize o app</strong> a agir em seu nome (SQL, Model Serving e AI Gateway). Clique em <strong>Authorize</strong></li>
+<li>Na aba <strong>📊 Cockpit</strong>, clique numa região do mapa e veja os gráficos filtrarem</li>
+<li>Ainda no <strong>Cockpit</strong>, clique em <strong>✨ Explicar</strong> em um dos gráficos</li>
+<li>Na aba <strong>💬 Assistente</strong>, faça as perguntas abaixo, uma por vez:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Qual o NPS médio por canal de atendimento?
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Qual o valor total em faturas não pagas?
+</code></pre></div></li>
+<li>Na aba <strong>🎯 Retenção Personalizada</strong>, cole <code>C01575</code> (a Marina), gere o e-mail e clique em <strong>Enviar para CRM</strong>. Depois repita com <code>C00018</code> (a Gabriela)</li>
+</ol>
+<p>No <strong>Assistente</strong>, repare que cada pergunta é roteada para o especialista certo (Suporte / Faturamento).</p>
+<p>Na <strong>Retenção</strong>, compare os dois e-mails: a Marina recebe 15% + 10 GB + gerente dedicado, e a Gabriela 10% + dobro da internet com WhatsApp + renegociação. As ofertas vêm da sua <code>get_cliente_360</code> (a regra do Ex. 8), e o modelo do Unity Gateway só escreve o texto.</p>
+<blockquote>
+<p><strong>Por que o app precisa autorizar o AI Gateway?</strong> Porque cada chamada ao modelo é feita <strong>com a sua identidade</strong> (on-behalf-of). Sem o escopo <code>ai-gateway</code>, o Gateway recusa a chamada. É isso que permite saber, depois, quem usou o modelo e quando.</p>
+</blockquote>
+<h2 id="passo-3-ver-a-governanca-do-unity-gateway">Passo 3: Ver a governança do Unity Gateway</h2>
+<ol>
+<li>No <strong>Catalog Explorer</strong>, abra <code>dbacademy</code> → o seu schema. Além das suas tabelas e funções, você verá o model service <strong><code>retencao-gateway</code></strong>: é um ativo do Unity Catalog, com dono (você), permissões e linhagem, como qualquer tabela</li>
+<li>Toda chamada que o app fez ao modelo foi registrada na <strong>tabela de inferência</strong> do model service. No <strong>SQL Editor</strong>, rode (trocando <code>&lt;seu_schema&gt;</code>):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">SELECT</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">event_time</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">status_code</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">latency_ms</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">destination_model</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="k">LEFT</span><span class="p">(</span><span class="n">get_json_object</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="s1">'$.messages[1].content'</span><span class="p">),</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">pedido</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">FROM</span><span class="w"> </span><span class="n">dbacademy</span><span class="p">.</span><span class="o">&lt;</span><span class="n">seu_schema</span><span class="o">&gt;</span><span class="p">.</span><span class="n">retencao_gateway_payload</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">event_time</span><span class="w"> </span><span class="k">DESC</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+</code></pre></div>
+Você verá uma linha para cada <strong>✨ Explicar</strong> e para cada <strong>e-mail</strong> gerado. Na coluna <code>pedido</code>, repare que as ofertas já chegam prontas ao modelo: a regra foi decidida pela sua função, não pela IA.</li>
+</ol>
+<blockquote>
+<p>A tabela de inferência pode levar alguns minutos para mostrar as chamadas mais recentes. Para uma visão de toda a conta (quem chamou, quantos tokens, qual modelo), a Databricks também registra o uso na tabela de sistema <code>system.ai_gateway.usage</code>, com algumas horas de atraso.</p>
+</blockquote>
+<h3 id="o-que-e-a-central-de-retencao">O que é a Central de Retenção?</h3>
+<p>Um <strong>Databricks App</strong> (a plataforma hospeda o app com compute próprio) com três abas, cada uma consumindo o que você construiu:</p>
+<table>
+<thead>
+<tr>
+<th>Aba</th>
+<th>O que faz</th>
+<th>De onde vem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>📊 Cockpit</strong></td>
+<td>KPIs de churn, um mapa do Brasil com o risco por região e 4 gráficos que filtram ao clicar numa região. Cada gráfico tem um botão <strong>✨ Explicar</strong> que pede uma leitura à IA.</td>
+<td><code>churn_scores</code> (Ex. 6) + schema compartilhado <code>dbacademy.churn</code>, lidos por um SQL Warehouse; a leitura vem do seu model service do Unity Gateway</td>
+</tr>
+<tr>
+<td><strong>💬 Assistente</strong></td>
+<td>Um chat que responde perguntas de negócio (<em>"qual o NPS médio por canal?"</em>, <em>"total de faturas em aberto?"</em>) roteando para o Genie certo.</td>
+<td>seu Supervisor do Ex. 7</td>
+</tr>
+<tr>
+<td><strong>🎯 Retenção Personalizada</strong></td>
+<td>Lista os clientes mais propensos a cancelar; você cola um id, gera o e-mail de retenção e clica em <strong>Enviar para CRM</strong>.</td>
+<td>função <code>get_cliente_360</code> do Ex. 8 (perfil + ofertas) + seu model service do Unity Gateway (texto)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Por que um app, e não mais uma dashboard?</strong> Porque um app te permite fazer muito mais coisas do que uma dashboard: aqui você navega o risco, conversa com os dados e dispara a retenção, tudo num só lugar, com a governança do Unity Catalog por trás (o app acessa os dados com a sua própria identidade)</p>
+</blockquote>
+<h2 id="explore">Explore</h2>
+<p>Você acaba de fechar o ciclo do treinamento: dos dados crus (Setup) a um produto de retenção que um time de negócio usa no dia a dia (detectar, diagnosticar, decidir e agir), tudo governado pelo Unity Catalog, inclusive o modelo de IA, pelo Unity Gateway. É o mesmo padrão que você leva para qualquer caso de uso: <strong>dados → métricas → IA → agentes → app</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../08%20-%20Reten%C3%A7%C3%A3o%20com%20ML%20e%20GenAI/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 08 - Retenção com ML e GenAI">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                08 - Retenção com ML e GenAI
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../10%20-%20Fechamento%20%28Pr%C3%B3ximos%20Passos%29/" class="md-footer__link md-footer__link--next" aria-label="Próximo: 10 - Fechamento (Próximos Passos)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                10 - Fechamento (Próximos Passos)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <a href="/Databricks-Master-Training/00%20-%20Setup%20and%20teardown/">00 - Setup and teardown</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.top", "navigation.footer", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
